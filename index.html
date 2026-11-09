@@ -77,6 +77,26 @@ h2 { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
 .pill.tbd { color: var(--tbd); background: var(--tbd-bg); }
 
 .tbl-wrap { overflow-x: auto; }
+tr.blockrow td { background: var(--accent-soft); padding: 9px 12px; border-bottom: 0; }
+tr.blockrow td > * { margin-right: 12px; }
+tr.blockrow .mono { color: var(--accent); font-weight: 500; }
+tbody tr.blockrow:not(:first-child) td { border-top: 10px solid var(--sheet); }
+tr.refrow td { padding: 10px 0 14px; }
+.refs-label { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 8px; }
+.refs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.ref { flex: 0 0 auto; padding: 0; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; cursor: zoom-in; background: var(--paper); line-height: 0; }
+.ref img { width: 168px; height: 112px; object-fit: cover; display: block; transition: transform .2s; }
+.ref:hover img { transform: scale(1.04); }
+.lightbox { position: fixed; inset: 0; background: rgba(8,10,14,.92); display: grid; grid-template-columns: 56px 1fr 56px; align-items: center; z-index: 50; padding: 24px 8px; }
+.lightbox[hidden] { display: none; }
+.lightbox figure { margin: 0; display: grid; gap: 10px; justify-items: center; min-width: 0; }
+.lightbox img { max-width: 100%; max-height: calc(100vh - 110px); border-radius: 6px; }
+.lightbox figcaption { color: #cfd5df; font: 13px var(--font-mono); }
+.lb-nav, .lb-x { background: transparent; border: 0; color: #fff; font-size: 40px; line-height: 1; cursor: pointer; padding: 8px; }
+.lb-x { position: absolute; top: 8px; right: 12px; font-size: 34px; }
+.blocks { display: grid; gap: 4px; border-top: 1px solid var(--rule); padding-top: 8px; font-size: 14px; }
+.blk { display: grid; grid-template-columns: 150px 1fr; gap: 10px; }
+.blk .mono { color: var(--accent); font-size: 13px; }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th { text-align: left; font: 500 11px/1.2 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 0 12px 8px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
 td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
@@ -156,7 +176,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; padding: 0 20
    Priority values: 1, 2, 3 (3 = lowest)
    ============================================================ */
 const P = {
-  updated: "Nov 6, 2026",
+  updated: "Nov 9, 2026",
   slate: [
     ["Client", "PDI"],
     ["Agency", "Ammunition"],
@@ -180,18 +200,18 @@ const P = {
     ]
   },
   days: [
-    { name: "Scout day", date: "Mon, Nov 9, 2026", status: "confirmed", call: "TBD", wrap: "TBD", loc: "Lawrenceville Branch, 1025 Old Norcross Rd", notes: "Walk the counter, slat wall, Will Call and truck yard. Confirm angles, trucks and load-in." },
-    { name: "Shoot day", date: "Sat, Dec 5, 2026", status: "confirmed", call: "TBD", wrap: "TBD", loc: "Lawrenceville Branch, 1025 Old Norcross Rd", notes: "Photo and video. Call times to follow on the call sheet." }
+    { name: "Scout day", date: "Mon, Nov 9, 2026", status: "confirmed", call: "9:00 AM", wrap: "TBD", loc: "Lawrenceville Branch, 1025 Old Norcross Rd", notes: "Crafty and lunch will live in the conference room near the bathrooms. Put out “Do Not Touch” signage. Crew parking on the near left side of the building." },
+    { name: "Shoot day", date: "Sat, Dec 5, 2026", status: "confirmed", call: "7:00 AM", wrap: "5:00 PM", loc: "Lawrenceville Branch, 1025 Old Norcross Rd", notes: "Photo and video. First shot 8:00 AM, last block wraps 4:40 PM.", blocks: true }
   ],
   priorities: [
-    { p: 1, name: "Customer at the counter", seq: [
-      "Wide: employee and customer interacting as customer walks up to the counter",
-      "Medium close: employee helping customer, smiling",
-      "Medium close reverse: customer smiling, saying thank you, walking away" ] },
     { p: 1, name: "Truck", seq: [
       "Medium wide: driver getting into the truck and closing the door",
       "Medium: driver using his iPad",
       "Wide: truck driving away with logo visible" ] },
+    { p: 1, name: "Customer at the counter", seq: [
+      "Wide: employee and customer interacting as customer walks up to the counter",
+      "Medium close: employee helping customer, smiling",
+      "Medium close reverse: customer smiling, saying thank you, walking away" ] },
     { p: 2, name: "Product wall", seq: [
       "Wide: employee stocking the wall",
       "Close up: employee examining a product" ] },
@@ -202,13 +222,35 @@ const P = {
       "Lowest priority. Can be handled with AI and existing photos." ] }
   ],
   locations: [
+    { name: "Truck yard", zone: "Exterior", talent: "1 male as PDI driver", note: "Building or trees in background. Branch team on hand to load and move trucks." },
     { name: "Main Counter", zone: "Location 1 · Interior", talent: "3 (2 as PDI employees, 1 customer)", note: "Employees can fill in as background customers when not the focus." },
     { name: "Slat Wall", zone: "Location 2 · Interior", talent: "Same models as Main Counter", note: "Includes gondola shelving." },
     { name: "Will Call", zone: "Location 3 · Order pick-up", talent: "2", note: "Will Call metal sign on the exterior wall is scuffed and will need retouching." },
-    { name: "Truck yard", zone: "Exterior", talent: "1 male as PDI driver", note: "Building or trees in background. Branch team on hand to load and move trucks." }
   ],
   trucks: ["26′ box truck (primary)", "26′ curtain truck", "Smaller pickup trucks"],
+  blocks: {
+    "Trucks": ["Trucks", "8:00 AM", "9:15 AM"],
+    "Main Counter": ["Counter sales", "10:25 AM", "12:00 PM"],
+    "Slat Wall": ["Slat Wall", "12:45 PM", "2:40 PM"],
+    "Will Call": ["Will Call", "3:30 PM", "4:40 PM"]
+  },
+  refs: {
+    "Trucks": ["img/trucks-C3A8389.jpg", "img/trucks-C3A8390.jpg", "img/trucks-C3A8392.jpg", "img/trucks-C3A8396.jpg", "img/trucks-C3A8397.jpg", "img/trucks-C3A8398.jpg", "img/trucks-C3A8400.jpg", "img/trucks-C3A8402.jpg"],
+    "Main Counter": ["img/counter-C3A8416.jpg", "img/counter-C3A8418.jpg", "img/counter-C3A8420.jpg"],
+    "Slat Wall": ["img/slatwall-C3A8424.jpg", "img/slatwall-C3A8425.jpg", "img/slatwall-C3A8426.jpg"],
+    "Will Call": ["img/willcall-C3A8387.jpg", "img/willcall-C3A8464.jpg", "img/willcall-C3A8467.jpg"]
+  },
   shotGroups: {
+    "Trucks": [
+      [1, "Medium wide: driver getting into the truck and closing the door", "Driver", "Video"],
+      [1, "Medium: driver using his iPad in the cab", "Driver", "Video"],
+      [1, "Wide: truck driving away, logo visible (base for AI drive-off)", "Driver", "Video"],
+      [1, "Driver standing outside the 26′ box truck, door logo visible", "Driver", "Photo"],
+      [1, "Driver in the truck using an iPad or clipboard", "Driver", "Photo"],
+      [1, "Driver about to step into the truck", "Driver", "Photo"],
+      [2, "Driver’s reflection in the side mirror, if the angle works", "Driver", "Photo"],
+      [3, "Tentative: driver with clipboard checking off a list", "Driver", "Photo"]
+    ],
     "Main Counter": [
       [1, "Wide: customer walks up, employee and customer interacting", "Employee + customer", "Video"],
       [1, "Medium close: employee helping customer, smiling", "Employee + customer", "Video"],
@@ -219,7 +261,9 @@ const P = {
       [1, "Alternate angle: from behind the counter toward the customer", "Employee + customer", "Photo"],
       [1, "PDI employee at the computer alone", "Employee", "Photo"],
       [1, "PDI employee straightening product on the wall behind the counter", "Employee", "Photo"],
-      [1, "Wide of counter: employee with customer plus 1–2 other customers shopping", "3+", "Photo"]
+      [1, "Wide of counter: employee with customer plus 1–2 other customers shopping", "3+", "Photo"],
+      [3, "Wide shots without people (can be done with AI + photos)", "None", "Video"],
+      [3, "Wide of branch interior with clean, stocked shelves. Multiple angles and walls; include branding if it looks good", "None", "Photo"]
     ],
     "Slat Wall": [
       [2, "Wide: employee stocking the product wall", "Employee", "Video"],
@@ -228,31 +272,17 @@ const P = {
       [1, "Employee and customer at the slat wall discussing product options", "Employee + customer", "Photo"],
       [1, "Customer grabbing product off the slat wall: wide", "Customer", "Photo"],
       [1, "Customer grabbing product off the slat wall: close up", "Customer", "Photo"],
+      [3, "Details: slat wall", "None", "Photo"],
       [1, "Customer picking up or looking at product on the gondola", "Customer", "Photo"],
       [1, "Customer shopping", "Customer", "Photo"]
-    ],
-    "Interior, no talent": [
-      [3, "Wide shots without people (can be done with AI + photos)", "None", "Video"],
-      [3, "Wide of branch interior with clean, stocked shelves. Multiple angles and walls; include branding if it looks good", "None", "Photo"],
-      [3, "Details: racks of fittings, pipe, valves, fixtures (website Tools & Shop Supplies)", "None", "Photo"],
-      [3, "Details: slat wall", "None", "Photo"]
     ],
     "Will Call": [
       [2, "Wide: Will Call counter, employee interacting with customer", "Employee + customer", "Video"],
       [2, "Medium: employee smiling at customer in the same scene", "Employee + customer", "Video"],
+      [3, "Details: racks of fittings, pipe, valves, fixtures (website Tools & Shop Supplies)", "None", "Photo"],
       [2, "PDI employee at the Will Call counter helping a customer, multiple angles", "Employee + customer", "Photo"],
       [2, "Will Call banner or sign on the exterior wall (retouch scuffs)", "None", "Photo"],
       [2, "PDI warehouse employee posing in an aisle, stock-photo style", "Warehouse employee", "Photo"]
-    ],
-    "Trucks": [
-      [1, "Medium wide: driver getting into the truck and closing the door", "Driver", "Video"],
-      [1, "Medium: driver using his iPad in the cab", "Driver", "Video"],
-      [1, "Wide: truck driving away, logo visible (base for AI drive-off)", "Driver", "Video"],
-      [1, "Driver standing outside the 26′ box truck, door logo visible", "Driver", "Photo"],
-      [1, "Driver in the truck using an iPad or clipboard", "Driver", "Photo"],
-      [1, "Driver about to step into the truck", "Driver", "Photo"],
-      [2, "Driver’s reflection in the side mirror, if the angle works", "Driver", "Photo"],
-      [3, "Tentative: driver with clipboard checking off a list", "Driver", "Photo"]
     ]
   },
   crew: [
@@ -317,6 +347,7 @@ const sections = [
         <div class="day-top"><h3>${esc(d.name)}</h3>${pill(d.status)}</div>
         <div class="date">${esc(d.date)}</div>
         <dl class="kv"><dt>Crew call</dt><dd class="mono">${v(d.call)}</dd><dt>Est. wrap</dt><dd class="mono">${v(d.wrap)}</dd><dt>Location</dt><dd>${v(d.loc)}</dd><dt>Notes</dt><dd>${v(d.notes)}</dd></dl>
+        ${d.blocks ? `<div class="blocks">${Object.values(P.blocks).filter(b => b[1] !== "TBD").map(b => `<div class="blk"><span class="mono">${b[1]}–${b[2]}</span><span>${esc(b[0])}</span></div>`).join("")}</div>` : ""}
       </div>`).join("")}</div>`],
   ["priorities", "Priority setups", () => `
     <p class="sec-note" style="margin:0 0 12px">Video sequences from the B2B shot list, in shooting priority. <a href="https://docs.google.com/presentation/d/12EkScJ4FWiiC2CxMEgMLQumo0mk2AJUM-dQxEFDwAeg/edit?slide=id.g3d282e93741_0_3298#slide=id.g3d282e93741_0_3298" target="_blank" rel="noopener">See reference images in the B2B Shot List deck ↗</a></p>
@@ -330,7 +361,7 @@ const sections = [
     return `<div class="tabs" role="group" aria-label="Filter by location">${keys.map((k, i) => `<button type="button" id="sl-${i}" data-g="${esc(k)}" aria-pressed="${i === 0}">${esc(k)}</button>`).join("")}</div>
       <div class="tabs" role="group" aria-label="Filter by type">${["All types","Photo","Video"].map((k,i)=>`<button type="button" id="st-${i}" data-t="${k}" aria-pressed="${i===0}">${k}</button>`).join("")}<span class="sec-note" id="sl-count" style="align-self:center;margin-left:6px"></span></div>
       <div id="sl-body"></div>
-      <p class="sec-note" style="margin:12px 0 0">Photo shots come from the Trade Shot List v3; video shots come from the B2B Shot List. P1 = top priority, P3 = lowest.</p>`;
+      <p class="sec-note" style="margin:12px 0 0">Shots are numbered in shooting order and grouped by time block. Click a scout photo to enlarge it. Photo shots come from the Trade Shot List v3; video shots come from the B2B Shot List. P1 = top priority, P3 = lowest.</p>`;
   }],
   ["locations", "Locations", () => `
     <div class="callout" style="margin-bottom:14px"><strong>PDI Lawrenceville Branch</strong><br><a href="https://www.google.com/maps/search/1025+Old+Norcross+Rd,+Lawrenceville,+GA+30046,+USA">1025 Old Norcross Rd, Lawrenceville, GA 30046</a><br><span class="sec-note">Parking and load-in details TBD.</span></div>
@@ -372,19 +403,56 @@ document.getElementById("footer").textContent = `Last updated ${P.updated} · So
 
 let slG = "All", slT = "All types";
 function renderShots() {
-  const rows = (slG === "All"
-    ? Object.entries(P.shotGroups).flatMap(([loc, list]) => list.map(x => [x, loc]))
-    : P.shotGroups[slG].map(x => [x, slG])).filter(([x]) => slT === "All types" || x[3] === slT);
-  const nv = rows.filter(([x]) => x[3] === "Video").length;
-  document.getElementById("sl-count").textContent = `${rows.length} shots · ${rows.length - nv} photo · ${nv} video`;
-  document.getElementById("sl-body").innerHTML = table(["#", "Type", "Pri", "Shot", "Location", "Talent"],
-    rows.map(([x, loc], i) => [`<span class="mono">${String(i + 1).padStart(2, "0")}</span>`, `<span class="media ${x[3].toLowerCase()}">${x[3]}</span>`, pri(x[0]), esc(x[1]), esc(loc), esc(x[2])]));
+  const groups = Object.entries(P.shotGroups).filter(([g]) => slG === "All" || g === slG);
+  let n = 0, total = 0, nv = 0, body = "";
+  const numbers = new Map(); let k = 0;
+  Object.entries(P.shotGroups).forEach(([g, list]) => list.forEach(x => numbers.set(x, ++k)));
+  groups.forEach(([g, list]) => {
+    const shots = list.filter(x => slT === "All types" || x[3] === slT);
+    if (!shots.length) return;
+    const b = P.blocks[g] || [g, "TBD", "TBD"];
+    const time = b[1] === "TBD" ? '<span class="placeholder">Time TBD</span>' : `${b[1]} – ${b[2]}`;
+    body += `<tr class="blockrow"><td colspan="6"><span class="mono">${time}</span><strong>${esc(b[0])}</strong><span class="sec-note">${shots.length} shot${shots.length > 1 ? "s" : ""}</span></td></tr>`;
+    const refs = (P.refs || {})[g] || [];
+    if (refs.length) body += `<tr class="refrow"><td colspan="6"><div class="refs-label">Scout references · ${refs.length} photo${refs.length > 1 ? "s" : ""}</div><div class="refs">${refs.map((r, i) => `<button type="button" class="ref" data-rg="${esc(g)}" data-i="${i}" aria-label="Open ${esc(b[0])} reference ${i + 1}"><img src="${r}" alt="${esc(b[0])} scout reference ${i + 1}" loading="lazy"></button>`).join("")}</div></td></tr>`;
+    shots.forEach(x => { total++; if (x[3] === "Video") nv++;
+      body += `<tr><td><span class="mono">${String(numbers.get(x)).padStart(2, "0")}</span></td><td><span class="media ${x[3].toLowerCase()}">${x[3]}</span></td><td>${pri(x[0])}</td><td>${esc(x[1])}</td><td>${esc(g)}</td><td>${esc(x[2])}</td></tr>`; });
+  });
+  document.getElementById("sl-count").textContent = `${total} shots · ${total - nv} photo · ${nv} video`;
+  document.getElementById("sl-body").innerHTML = `<div class="tbl-wrap"><table><thead><tr>${["#", "Type", "Pri", "Shot", "Location", "Talent"].map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div>`;
   document.querySelectorAll("#shot-list [data-g]").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === slG));
   document.querySelectorAll("#shot-list [data-t]").forEach(b => b.setAttribute("aria-pressed", b.dataset.t === slT));
 }
 document.querySelectorAll("#shot-list [data-g]").forEach(b => b.addEventListener("click", () => { slG = b.dataset.g; renderShots(); }));
 document.querySelectorAll("#shot-list [data-t]").forEach(b => b.addEventListener("click", () => { slT = b.dataset.t; renderShots(); }));
 renderShots();
+
+const lb = document.createElement("div");
+lb.className = "lightbox"; lb.hidden = true;
+lb.innerHTML = '<button type="button" class="lb-x" aria-label="Close">×</button><button type="button" class="lb-nav lb-prev" aria-label="Previous">‹</button><figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-nav lb-next" aria-label="Next">›</button>';
+document.body.appendChild(lb);
+let lbG = null, lbI = 0;
+function showLB() {
+  const list = P.refs[lbG]; lbI = (lbI + list.length) % list.length;
+  lb.querySelector("img").src = list[lbI];
+  lb.querySelector("img").alt = `${P.blocks[lbG][0]} scout reference ${lbI + 1}`;
+  lb.querySelector("figcaption").textContent = `${P.blocks[lbG][0]} · scout reference ${lbI + 1} of ${list.length}`;
+  lb.hidden = false;
+}
+document.getElementById("sl-body").addEventListener("click", e => {
+  const b = e.target.closest(".ref"); if (!b) return;
+  lbG = b.dataset.rg; lbI = +b.dataset.i; showLB(); lb.querySelector(".lb-x").focus();
+});
+lb.querySelector(".lb-x").onclick = () => { lb.hidden = true; };
+lb.querySelector(".lb-prev").onclick = () => { lbI--; showLB(); };
+lb.querySelector(".lb-next").onclick = () => { lbI++; showLB(); };
+lb.addEventListener("click", e => { if (e.target === lb) lb.hidden = true; });
+document.addEventListener("keydown", e => {
+  if (lb.hidden) return;
+  if (e.key === "Escape") lb.hidden = true;
+  if (e.key === "ArrowLeft") { lbI--; showLB(); }
+  if (e.key === "ArrowRight") { lbI++; showLB(); }
+});
 
 function markNav() {
   const id = location.hash.slice(1) || "overview";
