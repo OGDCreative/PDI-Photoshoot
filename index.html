@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDI Photoshoot 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: sticky slate header with production stats, left section nav on wide screens, call-sheet style sections stacked. */
+:root {
+  --paper: #f3f4f6;
+  --sheet: #ffffff;
+  --ink: #15181e;
+  --muted: #5d6573;
+  --rule: #dde1e7;
+  --accent: #1f4fd8;
+  --accent-soft: #e6ecfc;
+  --ok: #17803d;  --ok-bg: #e3f4e8;
+  --warn: #9a5b00; --warn-bg: #fdf0d8;
+  --tbd: #6b7280; --tbd-bg: #eceef1;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1217; --sheet: #171b22; --ink: #e8ebf0; --muted: #9aa3b2; --rule: #2a303b;
+    --accent: #7ea2ff; --accent-soft: #1d2740;
+    --ok: #5fd08a; --ok-bg: #16301f; --warn: #f0b955; --warn-bg: #352812; --tbd: #a0a8b5; --tbd-bg: #232833;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1217; --sheet: #171b22; --ink: #e8ebf0; --muted: #9aa3b2; --rule: #2a303b;
+  --accent: #7ea2ff; --accent-soft: #1d2740;
+  --ok: #5fd08a; --ok-bg: #16301f; --warn: #f0b955; --warn-bg: #352812; --tbd: #a0a8b5; --tbd-bg: #232833;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--font-body); }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+header.top { background: var(--sheet); border-bottom: 1px solid var(--rule); }
+.top-inner { max-width: 1180px; margin: 0 auto; padding: 28px 20px 22px; display: grid; gap: 18px; }
+.eyebrow { font: 500 12px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -.02em; line-height: 1.05; }
+.lede { color: var(--muted); max-width: 62ch; margin: 0; }
+.slate { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.slate div { padding: 12px 14px; border-right: 1px solid var(--rule); background: var(--sheet); }
+.slate div:last-child { border-right: 0; }
+.slate dt { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 6px; }
+.slate dd { margin: 0; font-weight: 600; }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 24px 20px 64px; display: grid; grid-template-columns: 190px 1fr; gap: 32px; align-items: start; }
+nav.side { position: sticky; top: 16px; display: grid; gap: 2px; }
+nav.side a { text-decoration: none; color: var(--muted); padding: 7px 10px; border-radius: 6px; font-weight: 500; font-size: 14px; display: flex; justify-content: space-between; }
+nav.side a span { font: 12px var(--font-mono); opacity: .7; }
+nav.side a:hover { background: var(--sheet); color: var(--ink); }
+nav.side a.on { background: var(--accent-soft); color: var(--accent); }
+main { display: grid; gap: 24px; min-width: 0; }
+
+section.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 22px 22px 24px; scroll-margin-top: 16px; }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+h2 { font-size: 21px; font-weight: 700; letter-spacing: -.01em; }
+.sec-note { color: var(--muted); font-size: 13px; }
+
+.pill { display: inline-block; font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; padding: 5px 8px; border-radius: 99px; white-space: nowrap; }
+.pill.confirmed { color: var(--ok); background: var(--ok-bg); }
+.pill.hold { color: var(--warn); background: var(--warn-bg); }
+.pill.tbd { color: var(--tbd); background: var(--tbd-bg); }
+
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font: 500 11px/1.2 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 0 12px 8px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.time { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; width: 1%; }
+.placeholder { color: var(--muted); font-style: italic; }
+
+.days { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.day { border: 1px solid var(--rule); border-radius: 8px; padding: 14px; display: grid; gap: 8px; align-content: start; }
+.day-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.day h3 { font-size: 16px; }
+.day .date { font: 500 13px var(--font-mono); color: var(--accent); }
+.kv { display: grid; grid-template-columns: 92px 1fr; gap: 4px 10px; font-size: 14px; margin: 0; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.box { border: 1px solid var(--rule); border-radius: 8px; padding: 14px; display: grid; gap: 8px; align-content: start; }
+.box h3 { font-size: 15px; }
+.box p { margin: 0; font-size: 14px; }
+
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.tabs button { font: 500 13px var(--font-body); border: 1px solid var(--rule); background: transparent; color: var(--muted); padding: 6px 12px; border-radius: 99px; cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+
+.docs { display: grid; gap: 8px; }
+.doc { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--rule); border-radius: 8px; }
+.doc strong { display: block; font-weight: 600; }
+.doc small { color: var(--muted); }
+
+.callout { background: var(--accent-soft); border-radius: 8px; padding: 12px 14px; font-size: 14px; }
+.pri { display:inline-block; font:600 11px/1 var(--font-mono); padding:5px 7px; border-radius:4px; white-space:nowrap; }
+.pri.p1 { background: var(--accent); color: var(--sheet); }
+.pri.p2 { background: var(--accent-soft); color: var(--accent); }
+.pri.p3 { background: var(--tbd-bg); color: var(--tbd); }
+.box.prio.p1 { border-left: 3px solid var(--accent); }
+.seq { margin:0; padding-left:20px; display:grid; gap:4px; font-size:14px; }
+.media { display:inline-flex; align-items:center; gap:5px; font:500 12px/1 var(--font-mono); white-space:nowrap; }
+.media::before { content:""; width:8px; height:8px; border-radius:2px; background: var(--muted); }
+.media.video::before { background: var(--warn); border-radius:50%; }
+.media.photo::before { background: var(--accent); }
+.chips { display:flex; flex-wrap:wrap; gap:6px; }
+.chip { font-size:13px; border:1px solid var(--rule); border-radius:99px; padding:4px 10px; }
+footer { color: var(--muted); font-size: 13px; text-align: center; padding: 0 20px 40px; }
+
+@media (max-width: 820px) {
+  .wrap { grid-template-columns: 1fr; gap: 16px; }
+  nav.side { position: static; display: flex; overflow-x: auto; gap: 4px; padding-bottom: 4px; }
+  nav.side a { white-space: nowrap; }
+  nav.side a span { display: none; }
+  section.card { padding: 18px 16px 20px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="eyebrow">Production hub · PDI B2B + Trade shoot</div>
+    <h1>PDI Photoshoot 2026</h1>
+    <p class="lede">One shoot at the Lawrenceville Branch covering stills for trade marketing and footage for the B2B edit. Priority is real PDI employees and customers interacting at the counter and the truck. Items marked TBD are still being confirmed.</p>
+    <dl class="slate" id="slate"></dl>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="side" id="nav" aria-label="Sections"></nav>
+  <main id="main"></main>
+</div>
+
+<footer id="footer"></footer>
+
+<script>
+/* ============================================================
+   EDIT PRODUCTION INFO HERE. Status values: "confirmed", "hold", "tbd"
+   Priority values: 1, 2, 3 (3 = lowest)
+   ============================================================ */
+const P = {
+  updated: "Nov 6, 2026",
+  slate: [
+    ["Client", "PDI"],
+    ["Agency", "Ammunition"],
+    ["Scout", "Mon, Nov 9"],
+    ["Shoot date", "Sat, Dec 5"],
+    ["Location", "PDI Lawrenceville Branch"],
+    ["Photographer", "Scott Lowden"]
+  ],
+  overview: {
+    stills: "Trade-focused photography for brochures, pop-up banners, website imagery and social media.",
+    copyPoints: ["Knowledgeable Counter Staff", "Your Trusted Source for Plumbing", "Local Delivery", "Join Our Trade Program", "Brands You Trust"],
+    video: "The B2B edit is mostly approved. The goal is to elevate the 7 to 11 second section, where the copy says “we’ve got you, from spec to site.” That moment gets real customer interaction and human faces in place of the circle motif. A PDI employee then gets into the truck, and a new AI-generated drive-off shot is built from the actual truck.",
+    rationale: "AI still struggles with keeping people consistent. Shooting real employees and customers in consistent sequences at a real PDI location is the best use of the day, for this project and for future ones.",
+    deliverables: [
+      ["Trade brochures", "Stills", "tbd"],
+      ["Pop-up banners", "Stills", "tbd"],
+      ["Website imagery, incl. Tools & Shop Supplies", "Stills", "tbd"],
+      ["Social media", "Stills", "tbd"],
+      ["B2B edit, 0:07–0:11 replacement", "Video", "tbd"],
+      ["Truck drive-off (AI generation from real truck)", "Video / AI", "tbd"]
+    ]
+  },
+  days: [
+    { name: "Scout day", date: "Mon, Nov 9, 2026", status: "confirmed", call: "TBD", wrap: "TBD", loc: "Lawrenceville Branch, 1025 Old Norcross Rd", notes: "Walk the counter, slat wall, Will Call and truck yard. Confirm angles, trucks and load-in." },
+    { name: "Shoot day", date: "Sat, Dec 5, 2026", status: "confirmed", call: "TBD", wrap: "TBD", loc: "Lawrenceville Branch, 1025 Old Norcross Rd", notes: "Photo and video. Call times to follow on the call sheet." }
+  ],
+  priorities: [
+    { p: 1, name: "Customer at the counter", seq: [
+      "Wide: employee and customer interacting as customer walks up to the counter",
+      "Medium close: employee helping customer, smiling",
+      "Medium close reverse: customer smiling, saying thank you, walking away" ] },
+    { p: 1, name: "Truck", seq: [
+      "Medium wide: driver getting into the truck and closing the door",
+      "Medium: driver using his iPad",
+      "Wide: truck driving away with logo visible" ] },
+    { p: 2, name: "Product wall", seq: [
+      "Wide: employee stocking the wall",
+      "Close up: employee examining a product" ] },
+    { p: 2, name: "Will Call counter", seq: [
+      "Wide: Will Call counter, employee interacting with customer",
+      "Medium: employee smiling at customer in the same scene" ] },
+    { p: 3, name: "Wide shots, no people", seq: [
+      "Lowest priority. Can be handled with AI and existing photos." ] }
+  ],
+  locations: [
+    { name: "Main Counter", zone: "Location 1 · Interior", talent: "3 (2 as PDI employees, 1 customer)", note: "Employees can fill in as background customers when not the focus." },
+    { name: "Slat Wall", zone: "Location 2 · Interior", talent: "Same models as Main Counter", note: "Includes gondola shelving." },
+    { name: "Will Call", zone: "Location 3 · Order pick-up", talent: "2", note: "Will Call metal sign on the exterior wall is scuffed and will need retouching." },
+    { name: "Truck yard", zone: "Exterior", talent: "1 male as PDI driver", note: "Building or trees in background. Branch team on hand to load and move trucks." }
+  ],
+  trucks: ["26′ box truck (primary)", "26′ curtain truck", "Smaller pickup trucks"],
+  shotGroups: {
+    "Main Counter": [
+      [1, "Wide: customer walks up, employee and customer interacting", "Employee + customer", "Video"],
+      [1, "Medium close: employee helping customer, smiling", "Employee + customer", "Video"],
+      [1, "Medium close reverse: customer smiling, says thank you, walks away", "Employee + customer", "Video"],
+      [1, "PDI employee helping customer at the counter: talking", "Employee + customer", "Photo"],
+      [1, "Employee and customer looking at a brochure or notepad", "Employee + customer", "Photo"],
+      [1, "Exchanging supplies (for Order Pick-Up use)", "Employee + customer", "Photo"],
+      [1, "Alternate angle: from behind the counter toward the customer", "Employee + customer", "Photo"],
+      [1, "PDI employee at the computer alone", "Employee", "Photo"],
+      [1, "PDI employee straightening product on the wall behind the counter", "Employee", "Photo"],
+      [1, "Wide of counter: employee with customer plus 1–2 other customers shopping", "3+", "Photo"]
+    ],
+    "Slat Wall": [
+      [2, "Wide: employee stocking the product wall", "Employee", "Video"],
+      [2, "Close up: employee examining a product", "Employee", "Video"],
+      [1, "PDI employee straightening or stocking product on the wall", "Employee", "Photo"],
+      [1, "Employee and customer at the slat wall discussing product options", "Employee + customer", "Photo"],
+      [1, "Customer grabbing product off the slat wall: wide", "Customer", "Photo"],
+      [1, "Customer grabbing product off the slat wall: close up", "Customer", "Photo"],
+      [1, "Customer picking up or looking at product on the gondola", "Customer", "Photo"],
+      [1, "Customer shopping", "Customer", "Photo"]
+    ],
+    "Interior, no talent": [
+      [3, "Wide shots without people (can be done with AI + photos)", "None", "Video"],
+      [3, "Wide of branch interior with clean, stocked shelves. Multiple angles and walls; include branding if it looks good", "None", "Photo"],
+      [3, "Details: racks of fittings, pipe, valves, fixtures (website Tools & Shop Supplies)", "None", "Photo"],
+      [3, "Details: slat wall", "None", "Photo"]
+    ],
+    "Will Call": [
+      [2, "Wide: Will Call counter, employee interacting with customer", "Employee + customer", "Video"],
+      [2, "Medium: employee smiling at customer in the same scene", "Employee + customer", "Video"],
+      [2, "PDI employee at the Will Call counter helping a customer, multiple angles", "Employee + customer", "Photo"],
+      [2, "Will Call banner or sign on the exterior wall (retouch scuffs)", "None", "Photo"],
+      [2, "PDI warehouse employee posing in an aisle, stock-photo style", "Warehouse employee", "Photo"]
+    ],
+    "Trucks": [
+      [1, "Medium wide: driver getting into the truck and closing the door", "Driver", "Video"],
+      [1, "Medium: driver using his iPad in the cab", "Driver", "Video"],
+      [1, "Wide: truck driving away, logo visible (base for AI drive-off)", "Driver", "Video"],
+      [1, "Driver standing outside the 26′ box truck, door logo visible", "Driver", "Photo"],
+      [1, "Driver in the truck using an iPad or clipboard", "Driver", "Photo"],
+      [1, "Driver about to step into the truck", "Driver", "Photo"],
+      [2, "Driver’s reflection in the side mirror, if the angle works", "Driver", "Photo"],
+      [3, "Tentative: driver with clipboard checking off a list", "Driver", "Photo"]
+    ]
+  },
+  crew: [
+    ["Direction", "Director / Video", "Ryan Vera", "confirmed"],
+    ["Camera", "Photographer", "Scott Lowden", "confirmed"],
+    ["Wardrobe", "PDI-branded polos and accessories", "Supplied by PDI", "confirmed"]
+  ],
+  photographerNote: "Chosen for his wide body of corporate candid work. He suits capturing talent and PDI employees in a range of poses, conversations and actions, and can suggest ways to get the most out of the shoot window.",
+  talent: [
+    ["Talent 1", "Counter service / retail", "20s Caucasian male. Facial hair optional, neatly trimmed.", "tbd"],
+    ["Talent 2", "Counter service / retail", "20s Black woman.", "tbd"],
+    ["Talent 3", "Counter service / retail", "30s–40s Hispanic male. Facial hair optional, neatly trimmed.", "tbd"],
+    ["Talent 4", "Warehouse / truck driver", "30s–40s Caucasian male.", "tbd"]
+  ],
+  castingNote: "No speaking roles. Ammunition would like to see photos of PDI employee talent before casting, to make sure the cast of team members and customers is diverse.",
+  wardrobe: {
+    general: "Clean, unwrinkled, no stains, tears, writing or logos. No reflective fabrics or small patterns; solid colors preferred. Bring two wardrobe options to set. PDI-branded clothing and accessories will be provided.",
+    pieces: [
+      ["Top", "Men: pressed, fitted collared polo, tucked in with a belt; PDI logo polo preferred. Women: polo or conservative solid-color blouse in the provided colors."],
+      ["Bottom", "Dark business-casual jeans, khakis or Dockers-style pants. Dresses and skirts no shorter than two inches above the knee."],
+      ["Shoes", "Warehouse: steel-toed shoes. Showroom: closed-toe oxfords, loafers or tidy flats. Counter sales: clean athletic or casual shoes in a neutral color. No neon, high tops or non-PDI logos."],
+      ["Grooming", "Neatly manicured nails, neat hair, minimal jewelry. Cover visible tattoos. Piercings limited to ears and/or one small facial piercing such as a nose stud."],
+      ["Not allowed", "Camouflage, T-shirts, tank tops, shorts, construction or hunting boots (PDI dress code)."]
+    ],
+    customers: [
+      ["Contractor I", "Utility work pants, plain neutral work tee or polo, boots, nondescript ballcap."],
+      ["Contractor II", "Elevated neutral athletic wear (no sweatpants). Optional hi-vis or safety outer layer."],
+      ["Custom Home Builder", "Business casual: jeans, neatly pressed button-down, all-weather jacket."],
+      ["DIY Remodeler", "Elevated neutral athletic wear (leggings, fitted top or jacket). Optional crossbody purse."]
+    ],
+    customerRule: "PDI employees play the customers. No PDI or other logos, reflective materials, wrinkles, small patterns, rips or stains."
+  },
+  docs: [
+    ["PDI 2026 Wardrobe and Photography Recos", "Ammunition · 17 pp · photographer, wardrobe, casting", "confirmed"],
+    ["PDI B2B Shot List", "Ammunition · Google Slides · video priorities + reference images", "confirmed", "https://docs.google.com/presentation/d/12EkScJ4FWiiC2CxMEgMLQumo0mk2AJUM-dQxEFDwAeg/edit?slide=id.g3d282e93741_0_3298#slide=id.g3d282e93741_0_3298"],
+    ["Photoshoot Trade Shot List v3", "PDI · 6 pp · Lawrenceville stills", "confirmed"],
+    ["Shoot schedule / call sheet", "Ammunition", "tbd"],
+    ["Talent releases", "PDF", "tbd"]
+  ]
+};
+
+/* ---------- rendering ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const v = s => /\bTBD\b/.test(s) ? `<span class="placeholder">${esc(s)}</span>` : esc(s);
+const pill = s => `<span class="pill ${s}">${s === "tbd" ? "TBD" : s}</span>`;
+const pri = n => `<span class="pri p${n}">P${n}</span>`;
+const table = (cols, rows) => `<div class="tbl-wrap"><table><thead><tr>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+const allShots = Object.values(P.shotGroups).flat();
+
+const sections = [
+  ["overview", "Overview", () => `
+    <div class="grid2" style="margin-bottom:18px">
+      <div class="box"><h3>Stills</h3><p>${esc(P.overview.stills)}</p><p class="sec-note">Should pair with copy points:</p><div class="chips">${P.overview.copyPoints.map(c => `<span class="chip">${esc(c)}</span>`).join("")}</div></div>
+      <div class="box"><h3>B2B video</h3><p>${esc(P.overview.video)}</p></div>
+    </div>
+    <div class="callout" style="margin-bottom:18px"><strong>Why shoot it for real:</strong> ${esc(P.overview.rationale)}</div>
+    <h3 style="font-size:15px;margin-bottom:8px">Deliverables</h3>
+    ${table(["Deliverable", "Type", "Status"], P.overview.deliverables.map(d => [esc(d[0]), esc(d[1]), pill(d[2])]))}`],
+  ["schedule", "Schedule", () => `
+    <div class="days">${P.days.map(d => `
+      <div class="day">
+        <div class="day-top"><h3>${esc(d.name)}</h3>${pill(d.status)}</div>
+        <div class="date">${esc(d.date)}</div>
+        <dl class="kv"><dt>Crew call</dt><dd class="mono">${v(d.call)}</dd><dt>Est. wrap</dt><dd class="mono">${v(d.wrap)}</dd><dt>Location</dt><dd>${v(d.loc)}</dd><dt>Notes</dt><dd>${v(d.notes)}</dd></dl>
+      </div>`).join("")}</div>`],
+  ["priorities", "Priority setups", () => `
+    <p class="sec-note" style="margin:0 0 12px">Video sequences from the B2B shot list, in shooting priority. <a href="https://docs.google.com/presentation/d/12EkScJ4FWiiC2CxMEgMLQumo0mk2AJUM-dQxEFDwAeg/edit?slide=id.g3d282e93741_0_3298#slide=id.g3d282e93741_0_3298" target="_blank" rel="noopener">See reference images in the B2B Shot List deck ↗</a></p>
+    <div class="grid2">${P.priorities.map(x => `
+      <div class="box prio p${x.p}">
+        <div class="day-top"><h3>${esc(x.name)}</h3>${pri(x.p)}</div>
+        <ol class="seq">${x.seq.map(s => `<li>${esc(s)}</li>`).join("")}</ol>
+      </div>`).join("")}</div>`],
+  ["shot-list", "Shot list", () => {
+    const keys = ["All", ...Object.keys(P.shotGroups)];
+    return `<div class="tabs" role="group" aria-label="Filter by location">${keys.map((k, i) => `<button type="button" id="sl-${i}" data-g="${esc(k)}" aria-pressed="${i === 0}">${esc(k)}</button>`).join("")}</div>
+      <div class="tabs" role="group" aria-label="Filter by type">${["All types","Photo","Video"].map((k,i)=>`<button type="button" id="st-${i}" data-t="${k}" aria-pressed="${i===0}">${k}</button>`).join("")}<span class="sec-note" id="sl-count" style="align-self:center;margin-left:6px"></span></div>
+      <div id="sl-body"></div>
+      <p class="sec-note" style="margin:12px 0 0">Photo shots come from the Trade Shot List v3; video shots come from the B2B Shot List. P1 = top priority, P3 = lowest.</p>`;
+  }],
+  ["locations", "Locations", () => `
+    <div class="callout" style="margin-bottom:14px"><strong>PDI Lawrenceville Branch</strong><br><a href="https://www.google.com/maps/search/1025+Old+Norcross+Rd,+Lawrenceville,+GA+30046,+USA">1025 Old Norcross Rd, Lawrenceville, GA 30046</a><br><span class="sec-note">Parking and load-in details TBD.</span></div>
+    <div class="grid2">${P.locations.map(l => `
+      <div class="box">
+        <div class="eyebrow">${esc(l.zone)}</div>
+        <h3>${esc(l.name)}</h3>
+        <dl class="kv"><dt>Talent</dt><dd>${esc(l.talent)}</dd><dt>Note</dt><dd>${esc(l.note)}</dd></dl>
+      </div>`).join("")}</div>
+    <h3 style="font-size:15px;margin:18px 0 8px">Trucks</h3>
+    <div class="chips">${P.trucks.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>
+    <p class="sec-note" style="margin:8px 0 0">Final trucks set once shots are locked.</p>`],
+  ["talent", "Talent & casting", () => `
+    ${table(["Talent", "Persona", "Casting", "Status"], P.talent.map(t => [esc(t[0]), esc(t[1]), esc(t[2]), pill(t[3])]))}
+    <div class="callout" style="margin-top:14px">${esc(P.castingNote)}</div>`],
+  ["wardrobe", "Wardrobe", () => `
+    <p style="margin:0 0 14px;max-width:65ch">${esc(P.wardrobe.general)}</p>
+    <h3 style="font-size:15px;margin-bottom:8px">PDI employee roles</h3>
+    ${table(["", "Guideline"], P.wardrobe.pieces.map(w => [`<strong>${esc(w[0])}</strong>`, esc(w[1])]))}
+    <h3 style="font-size:15px;margin:20px 0 4px">Customer personas</h3>
+    <p class="sec-note" style="margin:0 0 10px">${esc(P.wardrobe.customerRule)}</p>
+    <div class="grid2">${P.wardrobe.customers.map((c, i) => `<div class="box"><div class="eyebrow">0${i + 1}</div><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p></div>`).join("")}</div>`],
+  ["crew", "Crew", () => `
+    ${table(["Dept", "Role", "Who", "Status"], P.crew.map(c => [esc(c[0]), esc(c[1]), v(c[2]), pill(c[3])]))}
+    <div class="callout" style="margin-top:14px"><strong>Scott Lowden:</strong> ${esc(P.photographerNote)}</div>`],
+  ["documents", "Documents", () => `
+    <div class="docs">${P.docs.map(d => `<div class="doc"><div><strong>${d[3] ? `<a href="${esc(d[3])}" target="_blank" rel="noopener">${esc(d[0])} ↗</a>` : esc(d[0])}</strong><small>${esc(d[1])}</small></div>${d[2] === "confirmed" ? '<span class="pill confirmed">Received</span>' : '<span class="pill tbd">Pending</span>'}</div>`).join("")}</div>`]
+];
+
+document.getElementById("slate").innerHTML = P.slate.map(([k, val]) => `<div><dt>${esc(k)}</dt><dd>${v(val)}</dd></div>`).join("");
+const counts = { "shot-list": allShots.length, talent: P.talent.length, documents: P.docs.length, priorities: P.priorities.length };
+document.getElementById("nav").innerHTML = sections.map(([id, label]) => `<a href="#${id}" data-id="${id}">${label}${counts[id] ? `<span>${counts[id]}</span>` : ""}</a>`).join("");
+document.getElementById("main").innerHTML = sections.map(([id, label, fn]) => `
+  <section class="card" id="${id}">
+    <div class="sec-head"><h2>${label}</h2></div>
+    ${fn()}
+  </section>`).join("");
+document.getElementById("footer").textContent = `Last updated ${P.updated} · Sources: Ammunition wardrobe & photography recos, B2B shot list, PDI trade shot list v3.`;
+
+let slG = "All", slT = "All types";
+function renderShots() {
+  const rows = (slG === "All"
+    ? Object.entries(P.shotGroups).flatMap(([loc, list]) => list.map(x => [x, loc]))
+    : P.shotGroups[slG].map(x => [x, slG])).filter(([x]) => slT === "All types" || x[3] === slT);
+  const nv = rows.filter(([x]) => x[3] === "Video").length;
+  document.getElementById("sl-count").textContent = `${rows.length} shots · ${rows.length - nv} photo · ${nv} video`;
+  document.getElementById("sl-body").innerHTML = table(["#", "Type", "Pri", "Shot", "Location", "Talent"],
+    rows.map(([x, loc], i) => [`<span class="mono">${String(i + 1).padStart(2, "0")}</span>`, `<span class="media ${x[3].toLowerCase()}">${x[3]}</span>`, pri(x[0]), esc(x[1]), esc(loc), esc(x[2])]));
+  document.querySelectorAll("#shot-list [data-g]").forEach(b => b.setAttribute("aria-pressed", b.dataset.g === slG));
+  document.querySelectorAll("#shot-list [data-t]").forEach(b => b.setAttribute("aria-pressed", b.dataset.t === slT));
+}
+document.querySelectorAll("#shot-list [data-g]").forEach(b => b.addEventListener("click", () => { slG = b.dataset.g; renderShots(); }));
+document.querySelectorAll("#shot-list [data-t]").forEach(b => b.addEventListener("click", () => { slT = b.dataset.t; renderShots(); }));
+renderShots();
+
+function markNav() {
+  const id = location.hash.slice(1) || "overview";
+  document.querySelectorAll("nav.side a").forEach(a => a.classList.toggle("on", a.dataset.id === id));
+  const el = document.getElementById(id);
+  if (location.hash && el) el.scrollIntoView();
+}
+window.addEventListener("hashchange", markNav);
+markNav();
+</script>
+</body>
+</html>
