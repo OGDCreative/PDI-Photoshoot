@@ -81,6 +81,7 @@ tr.blockrow td { background: var(--accent-soft); padding: 9px 12px; border-botto
 tr.blockrow td > * { margin-right: 12px; }
 tr.blockrow .mono { color: var(--accent); font-weight: 500; }
 tbody tr.blockrow:not(:first-child) td { border-top: 10px solid var(--sheet); }
+tr.sizerow td { font: 600 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 14px 0 6px; border-bottom: 1px solid var(--rule); }
 tr.refrow td { padding: 10px 0 14px; }
 .refs-label { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 8px; }
 .refs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
@@ -244,26 +245,26 @@ const P = {
     "Trucks": [
       [1, "Medium wide: driver getting into the truck and closing the door", "Driver", "Video"],
       [1, "Medium: driver using his iPad in the cab", "Driver", "Video"],
-      [1, "Wide: truck driving away, logo visible (base for AI drive-off)", "Driver", "Video"],
       [1, "Driver standing outside the 26′ box truck, door logo visible", "Driver", "Photo"],
       [1, "Driver in the truck using an iPad or clipboard", "Driver", "Photo"],
       [1, "Driver about to step into the truck", "Driver", "Photo"],
       [2, "Driver’s reflection in the side mirror, if the angle works", "Driver", "Photo"],
-      [3, "Tentative: driver with clipboard checking off a list", "Driver", "Photo"]
+      [3, "Tentative: driver with clipboard checking off a list", "Driver", "Photo"],
+      [1, "Wide: truck driving away, logo visible (base for AI drive-off)", "Driver", "Video"]
     ],
     "Main Counter": [
-      [1, "Wide: customer walks up, employee and customer interacting", "Employee + customer", "Video"],
-      [1, "Medium close: employee helping customer, smiling", "Employee + customer", "Video"],
-      [1, "Medium close reverse: customer smiling, says thank you, walks away", "Employee + customer", "Video"],
-      [1, "PDI employee helping customer at the counter: talking", "Employee + customer", "Photo"],
-      [1, "Employee and customer looking at a brochure or notepad", "Employee + customer", "Photo"],
-      [1, "Exchanging supplies (for Order Pick-Up use)", "Employee + customer", "Photo"],
-      [1, "Alternate angle: from behind the counter toward the customer", "Employee + customer", "Photo"],
-      [1, "PDI employee at the computer alone", "Employee", "Photo"],
-      [1, "PDI employee straightening product on the wall behind the counter", "Employee", "Photo"],
-      [1, "Wide of counter: employee with customer plus 1–2 other customers shopping", "3+", "Photo"],
-      [3, "Wide shots without people (can be done with AI + photos)", "None", "Video"],
-      [3, "Wide of branch interior with clean, stocked shelves. Multiple angles and walls; include branding if it looks good", "None", "Photo"]
+      [3, "Wide shots without people (can be done with AI + photos)", "None", "Video", "Wide"],
+      [3, "Wide of branch interior with clean, stocked shelves. Multiple angles and walls; include branding if it looks good", "None", "Photo", "Wide"],
+      [1, "Wide of counter: employee with customer plus 1–2 other customers shopping", "3+", "Photo", "Wide"],
+      [1, "Wide: customer walks up, employee and customer interacting", "Employee + customer", "Video", "Wide"],
+      [1, "PDI employee helping customer at the counter: talking", "Employee + customer", "Photo", "Medium"],
+      [1, "Alternate angle: from behind the counter toward the customer", "Employee + customer", "Photo", "Medium"],
+      [1, "PDI employee at the computer alone", "Employee", "Photo", "Medium"],
+      [1, "PDI employee straightening product on the wall behind the counter", "Employee", "Photo", "Medium"],
+      [1, "Employee and customer looking at a brochure or notepad", "Employee + customer", "Photo", "Medium close"],
+      [1, "Medium close: employee helping customer, smiling", "Employee + customer", "Video", "Medium close"],
+      [1, "Medium close reverse: customer smiling, says thank you, walks away", "Employee + customer", "Video", "Medium close"],
+      [1, "Exchanging supplies (for Order Pick-Up use)", "Employee + customer", "Photo", "Close up"]
     ],
     "Slat Wall": [
       [2, "Wide: employee stocking the product wall", "Employee", "Video"],
@@ -415,7 +416,9 @@ function renderShots() {
     body += `<tr class="blockrow"><td colspan="6"><span class="mono">${time}</span><strong>${esc(b[0])}</strong><span class="sec-note">${shots.length} shot${shots.length > 1 ? "s" : ""}</span></td></tr>`;
     const refs = (P.refs || {})[g] || [];
     if (refs.length) body += `<tr class="refrow"><td colspan="6"><div class="refs-label">Scout references · ${refs.length} photo${refs.length > 1 ? "s" : ""}</div><div class="refs">${refs.map((r, i) => `<button type="button" class="ref" data-rg="${esc(g)}" data-i="${i}" aria-label="Open ${esc(b[0])} reference ${i + 1}"><img src="${r}" alt="${esc(b[0])} scout reference ${i + 1}" loading="lazy"></button>`).join("")}</div></td></tr>`;
+    let lastSize = null;
     shots.forEach(x => { total++; if (x[3] === "Video") nv++;
+      if (x[4] && x[4] !== lastSize) { lastSize = x[4]; body += `<tr class="sizerow"><td colspan="6">${esc(x[4])}</td></tr>`; }
       body += `<tr><td><span class="mono">${String(numbers.get(x)).padStart(2, "0")}</span></td><td><span class="media ${x[3].toLowerCase()}">${x[3]}</span></td><td>${pri(x[0])}</td><td>${esc(x[1])}</td><td>${esc(g)}</td><td>${esc(x[2])}</td></tr>`; });
   });
   document.getElementById("sl-count").textContent = `${total} shots · ${total - nv} photo · ${nv} video`;
