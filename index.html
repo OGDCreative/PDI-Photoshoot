@@ -82,6 +82,8 @@ tr.blockrow td > * { margin-right: 12px; }
 tr.blockrow .mono { color: var(--accent); font-weight: 500; }
 tbody tr.blockrow:not(:first-child) td { border-top: 10px solid var(--sheet); }
 tr.sizerow td { font: 600 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 14px 0 6px; border-bottom: 1px solid var(--rule); }
+tr.noterow td { padding: 10px 0 2px; border-bottom: 0; }
+.note { display: inline-block; font-size: 14px; background: var(--warn-bg); color: var(--ink); border-left: 3px solid var(--warn); padding: 7px 12px; border-radius: 0 6px 6px 0; }
 tr.refrow td { padding: 10px 0 14px; }
 .refs-label { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 8px; }
 .refs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
@@ -95,6 +97,15 @@ tr.refrow td { padding: 10px 0 14px; }
 .lightbox figcaption { color: #cfd5df; font: 13px var(--font-mono); }
 .lb-nav, .lb-x { background: transparent; border: 0; color: #fff; font-size: 40px; line-height: 1; cursor: pointer; padding: 8px; }
 .lb-x { position: absolute; top: 8px; right: 12px; font-size: 34px; }
+.cast { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.castcard { border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; display: grid; align-content: start; background: var(--sheet); }
+.headshot { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 25%; display: block; background: var(--paper); }
+.headshot.empty { display: grid; place-content: center; justify-items: center; gap: 6px; color: var(--muted); background: var(--accent-soft); }
+.headshot.empty span { font: 800 44px/1 var(--font-display); color: var(--accent); }
+.headshot.empty small { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
+.castbody { padding: 14px; display: grid; gap: 8px; }
+.castbody h3 { font-size: 17px; }
+.castbody a { font-size: 14px; font-weight: 500; }
 .blocks { display: grid; gap: 4px; border-top: 1px solid var(--rule); padding-top: 8px; font-size: 14px; }
 .blk { display: grid; grid-template-columns: 150px 1fr; gap: 10px; }
 .blk .mono { color: var(--accent); font-size: 13px; }
@@ -177,7 +188,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; padding: 0 20
    Priority values: 1, 2, 3 (3 = lowest)
    ============================================================ */
 const P = {
-  updated: "Nov 9, 2026",
+  updated: "Nov 17, 2026",
   slate: [
     ["Client", "PDI"],
     ["Agency", "Ammunition"],
@@ -235,6 +246,9 @@ const P = {
     "Slat Wall": ["Slat Wall", "12:45 PM", "2:40 PM"],
     "Will Call": ["Will Call", "3:30 PM", "4:40 PM"]
   },
+  blockNotes: {
+    "Trucks": "Wardrobe: talent in a T-shirt or quarter-zip."
+  },
   refs: {
     "Trucks": ["img/trucks-C3A8389.jpg", "img/trucks-C3A8390.jpg", "img/trucks-C3A8392.jpg", "img/trucks-C3A8396.jpg", "img/trucks-C3A8397.jpg", "img/trucks-C3A8398.jpg", "img/trucks-C3A8400.jpg", "img/trucks-C3A8402.jpg"],
     "Main Counter": ["img/counter-C3A8416.jpg", "img/counter-C3A8418.jpg", "img/counter-C3A8420.jpg"],
@@ -260,7 +274,7 @@ const P = {
       [1, "PDI employee helping customer at the counter: talking", "Employee + customer", "Photo", "Medium"],
       [1, "Alternate angle: from behind the counter toward the customer", "Employee + customer", "Photo", "Medium"],
       [1, "PDI employee at the computer alone", "Employee", "Photo", "Medium"],
-      [1, "PDI employee straightening product on the wall behind the counter", "Employee", "Photo", "Medium"],
+      [2, "PDI employee straightening product on the wall behind the counter", "Employee", "Photo", "Medium"],
       [1, "Employee and customer looking at a brochure or notepad", "Employee + customer", "Photo", "Medium close"],
       [1, "Medium close: employee helping customer, smiling", "Employee + customer", "Video", "Medium close"],
       [1, "Medium close reverse: customer smiling, says thank you, walks away", "Employee + customer", "Video", "Medium close"],
@@ -275,15 +289,15 @@ const P = {
       [1, "Customer grabbing product off the slat wall: close up", "Customer", "Photo"],
       [3, "Details: slat wall", "None", "Photo"],
       [1, "Customer picking up or looking at product on the gondola", "Customer", "Photo"],
-      [1, "Customer shopping", "Customer", "Photo"]
+      [2, "Customer shopping", "Customer", "Photo"]
     ],
     "Will Call": [
+      [1, "PDI warehouse employee posing in an aisle, stock-photo style", "All talent", "Photo"],
       [2, "Wide: Will Call counter, employee interacting with customer", "Employee + customer", "Video"],
       [2, "Medium: employee smiling at customer in the same scene", "Employee + customer", "Video"],
-      [3, "Details: racks of fittings, pipe, valves, fixtures (website Tools & Shop Supplies)", "None", "Photo"],
+      [1, "Details: racks of fittings, pipe, valves, fixtures (website Tools & Shop Supplies)", "None", "Photo"],
       [2, "PDI employee at the Will Call counter helping a customer, multiple angles", "Employee + customer", "Photo"],
-      [2, "Will Call banner or sign on the exterior wall (retouch scuffs)", "None", "Photo"],
-      [2, "PDI warehouse employee posing in an aisle, stock-photo style", "Warehouse employee", "Photo"]
+      [2, "Will Call banner or sign on the exterior wall (retouch scuffs)", "None", "Photo"]
     ]
   },
   crew: [
@@ -297,6 +311,11 @@ const P = {
     ["Talent 2", "Counter service / retail", "20s Black woman.", "tbd"],
     ["Talent 3", "Counter service / retail", "30s–40s Hispanic male. Facial hair optional, neatly trimmed.", "tbd"],
     ["Talent 4", "Warehouse / truck driver", "30s–40s Caucasian male.", "tbd"]
+  ],
+  cast: [
+    { name: "Javier Vazquez Jr.", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-javier.jpg", profile: "https://resumes.breakdownexpress.com/1212602-4724468?email=2c7f3a62-7f06-4f8a-95be-1ce788600162" },
+    { name: "Casey Nia Wortham", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-casey.jpg", profile: "https://resumes.breakdownexpress.com/1357750-4437767?email=04672856-691f-433e-af6f-56a465b73208" },
+    { name: "Costa Johnson", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-costa.jpg", profile: "https://resumes.breakdownexpress.com/1718614-5393547?email=594cbbdb-54c4-4588-8e2c-7e3162987c38" }
   ],
   castingNote: "No speaking roles. Ammunition would like to see photos of PDI employee talent before casting, to make sure the cast of team members and customers is diverse.",
   wardrobe: {
@@ -375,7 +394,17 @@ const sections = [
     <h3 style="font-size:15px;margin:18px 0 8px">Trucks</h3>
     <div class="chips">${P.trucks.map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>
     <p class="sec-note" style="margin:8px 0 0">Final trucks set once shots are locked.</p>`],
-  ["talent", "Talent & casting", () => `
+  ["talent", "Talent", () => `
+    <div class="cast">${P.cast.map(c => `
+      <article class="castcard">
+        ${c.photo ? `<img class="headshot" src="${esc(c.photo)}" alt="Headshot of ${esc(c.name)}">` : `<div class="headshot empty" role="img" aria-label="Headshot coming for ${esc(c.name)}"><span>${esc(c.name.split(" ").slice(0, 2).map(w => w[0]).join(""))}</span><small>Headshot coming</small></div>`}
+        <div class="castbody">
+          <h3>${esc(c.name)}</h3>
+          <dl class="kv"><dt>Role</dt><dd>${esc(c.role)}</dd><dt>Agency</dt><dd>${esc(c.agency)}</dd>${c.agent ? `<dt>Agent</dt><dd>${esc(c.agent)}</dd>` : ""}</dl>
+          ${c.profile ? `<a href="${esc(c.profile)}" target="_blank" rel="noopener">View casting profile ↗</a>` : ""}
+        </div>
+      </article>`).join("")}</div>
+    <h3 style="font-size:15px;margin:22px 0 8px">Casting specs</h3>
     ${table(["Talent", "Persona", "Casting", "Status"], P.talent.map(t => [esc(t[0]), esc(t[1]), esc(t[2]), pill(t[3])]))}
     <div class="callout" style="margin-top:14px">${esc(P.castingNote)}</div>`],
   ["wardrobe", "Wardrobe", () => `
@@ -393,7 +422,7 @@ const sections = [
 ];
 
 document.getElementById("slate").innerHTML = P.slate.map(([k, val]) => `<div><dt>${esc(k)}</dt><dd>${v(val)}</dd></div>`).join("");
-const counts = { "shot-list": allShots.length, talent: P.talent.length, documents: P.docs.length, priorities: P.priorities.length };
+const counts = { "shot-list": allShots.length, talent: P.cast.length, documents: P.docs.length, priorities: P.priorities.length };
 document.getElementById("nav").innerHTML = sections.map(([id, label]) => `<a href="#${id}" data-id="${id}">${label}${counts[id] ? `<span>${counts[id]}</span>` : ""}</a>`).join("");
 document.getElementById("main").innerHTML = sections.map(([id, label, fn]) => `
   <section class="card" id="${id}">
@@ -414,6 +443,8 @@ function renderShots() {
     const b = P.blocks[g] || [g, "TBD", "TBD"];
     const time = b[1] === "TBD" ? '<span class="placeholder">Time TBD</span>' : `${b[1]} – ${b[2]}`;
     body += `<tr class="blockrow"><td colspan="6"><span class="mono">${time}</span><strong>${esc(b[0])}</strong><span class="sec-note">${shots.length} shot${shots.length > 1 ? "s" : ""}</span></td></tr>`;
+    const note = (P.blockNotes || {})[g];
+    if (note) body += `<tr class="noterow"><td colspan="6"><span class="note">${esc(note)}</span></td></tr>`;
     const refs = (P.refs || {})[g] || [];
     if (refs.length) body += `<tr class="refrow"><td colspan="6"><div class="refs-label">Scout references · ${refs.length} photo${refs.length > 1 ? "s" : ""}</div><div class="refs">${refs.map((r, i) => `<button type="button" class="ref" data-rg="${esc(g)}" data-i="${i}" aria-label="Open ${esc(b[0])} reference ${i + 1}"><img src="${r}" alt="${esc(b[0])} scout reference ${i + 1}" loading="lazy"></button>`).join("")}</div></td></tr>`;
     let lastSize = null;
