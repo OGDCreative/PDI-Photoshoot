@@ -64,7 +64,10 @@ nav.side a { text-decoration: none; color: var(--muted); padding: 7px 10px; bord
 nav.side a span { font: 12px var(--font-mono); opacity: .7; }
 nav.side a:hover { background: var(--sheet); color: var(--ink); }
 nav.side a.on { background: var(--accent-soft); color: var(--accent); }
-main { display: grid; gap: 24px; min-width: 0; }
+main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; min-width: 0; }
+section.card, .wardrow > div { min-width: 0; }
+tr.refrow td .refs { max-width: calc(100vw - 340px); }
+@media (max-width: 820px) { tr.refrow td .refs { max-width: calc(100vw - 64px); } }
 
 section.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; padding: 22px 22px 24px; scroll-margin-top: 16px; }
 .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
@@ -105,6 +108,19 @@ tr.refrow td { padding: 10px 0 14px; }
 .headshot.empty small { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .06em; }
 .castbody { padding: 14px; display: grid; gap: 8px; }
 .castbody h3 { font-size: 17px; }
+.wardlist { display: grid; gap: 12px; }
+.wardrow { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.4fr); gap: 18px; border: 1px solid var(--rule); border-radius: 8px; padding: 14px; align-items: start; }
+.wardtext { display: grid; gap: 6px; }
+.wardtext h3 { font-size: 16px; }
+.wardtext p { margin: 0; font-size: 14px; }
+.wardtext .supplied { color: var(--accent); font-weight: 500; }
+.ref.ward img { width: 112px; height: 150px; object-fit: cover; object-position: center top; background: #fff; }
+.box.persona { grid-template-columns: 96px 1fr; gap: 14px; align-items: start; }
+.personaimg img { width: 96px; height: 150px; object-fit: contain; background: #fff; }
+@media (max-width: 640px) { .wardrow { grid-template-columns: 1fr; } }
+.castward { border-top: 1px solid var(--rule); padding-top: 8px; display: grid; gap: 4px; font-size: 13px; }
+.castward p { margin: 0; }
+.castward .supplied { color: var(--accent); font-weight: 500; }
 .castbody a { font-size: 14px; font-weight: 500; }
 .blocks { display: grid; gap: 4px; border-top: 1px solid var(--rule); padding-top: 8px; font-size: 14px; }
 .blk { display: grid; grid-template-columns: 150px 1fr; gap: 10px; }
@@ -188,7 +204,7 @@ footer { color: var(--muted); font-size: 13px; text-align: center; padding: 0 20
    Priority values: 1, 2, 3 (3 = lowest)
    ============================================================ */
 const P = {
-  updated: "Nov 20, 2026",
+  updated: "Nov 23, 2026",
   slate: [
     ["Client", "PDI"],
     ["Agency", "Ammunition"],
@@ -301,25 +317,44 @@ const P = {
     ]
   },
   crew: [
+    ["Production", "Producer", "Mario Rials", "confirmed"],
     ["Direction", "Director / Video", "Ryan Vera", "confirmed"],
     ["Camera", "Photographer", "Scott Lowden", "confirmed"],
-    ["Wardrobe", "PDI-branded polos and accessories", "Supplied by PDI", "confirmed"]
+    ["Camera", "Digital Tech", "David Morico", "confirmed"],
+    ["Lighting", "Gaffer", "Morgan Cooper", "confirmed"],
+    ["Grip", "Key Grip", "Dan Slemons", "confirmed"],
+    ["Wardrobe", "Wardrobe", "April Davis", "confirmed"],
+    ["Makeup", "Makeup", "TBD", "tbd"]
   ],
   photographerNote: "Chosen for his wide body of corporate candid work. He suits capturing talent and PDI employees in a range of poses, conversations and actions, and can suggest ways to get the most out of the shoot window.",
   talent: [
-    ["Talent 1", "Counter service / retail", "20s Caucasian male. Facial hair optional, neatly trimmed.", "tbd"],
-    ["Talent 2", "Counter service / retail", "20s Black woman.", "tbd"],
-    ["Talent 3", "Counter service / retail", "30s–40s Hispanic male. Facial hair optional, neatly trimmed.", "tbd"],
-    ["Talent 4", "Warehouse / truck driver", "30s–40s Caucasian male.", "tbd"]
+    ["Talent 1", "Service / retail man", "20s Caucasian male. Facial hair optional, neatly trimmed.", "Costa Johnson", "confirmed"],
+    ["Talent 2", "Service / retail woman", "20s Black woman.", "Casey Nia Wortham", "confirmed"],
+    ["Talent 3", "Service / retail man", "30s–40s Hispanic male. Facial hair optional, neatly trimmed.", "Javier Vazquez Jr.", "confirmed"],
+    ["Talent 4", "Warehouse / truck driver", "30s–40s Caucasian male.", "Caleb McCoy", "confirmed"],
+    ["Talent 5", "Customer", "Contractor I look.", "Byron John", "confirmed"]
   ],
   cast: [
-    { name: "Javier Vazquez Jr.", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-javier.jpg", profile: "https://resumes.breakdownexpress.com/1212602-4724468?email=2c7f3a62-7f06-4f8a-95be-1ce788600162" },
-    { name: "Casey Nia Wortham", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-casey.jpg", profile: "https://resumes.breakdownexpress.com/1357750-4437767?email=04672856-691f-433e-af6f-56a465b73208" },
-    { name: "Costa Johnson", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-costa.jpg", profile: "https://resumes.breakdownexpress.com/1718614-5393547?email=594cbbdb-54c4-4588-8e2c-7e3162987c38" },
-    { name: "Byron John", role: "Customer", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-byron.jpg", profile: "https://resumes.breakdownexpress.com/1345764-7741300?email=a60f823e-29c9-4b90-a1e1-d55685067aae" },
-    { name: "Caleb McCoy", role: "Warehouse / truck driver", agency: "Houghton Talent", agent: "Christy Hill", photo: "img/talent-caleb.jpg", profile: "https://resumes.breakdownexpress.com/971155-3309678?email=d39690e3-eb05-4148-8c67-735ab33046f5" }
+    { no: 1, name: "Costa Johnson", wardRef: "serviceMen", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-costa.jpg", profile: "https://resumes.breakdownexpress.com/1718614-5393547?email=594cbbdb-54c4-4588-8e2c-7e3162987c38",
+      wardrobe: "Dark business-casual jeans, khakis or Dockers-style pants, PDI shirt, clean athletic or casual shoes in a neutral color. Bring jeans and casual pant options.", supplied: "PDI shirt" },
+    { no: 2, name: "Casey Nia Wortham", wardRef: "serviceWomen", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-casey.jpg", profile: "https://resumes.breakdownexpress.com/1357750-4437767?email=04672856-691f-433e-af6f-56a465b73208",
+      wardrobe: "Dark business-casual jeans, khakis or Dockers-style pants, PDI shirt or conservative solid-color blouse, clean athletic or casual shoes in a neutral color. Bring jeans and casual pant options.", supplied: "PDI shirt" },
+    { no: 3, name: "Javier Vazquez Jr.", wardRef: "serviceMen", role: "Service / retail", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-javier.jpg", profile: "https://resumes.breakdownexpress.com/1212602-4724468?email=2c7f3a62-7f06-4f8a-95be-1ce788600162",
+      wardrobe: "Dark business-casual jeans, khakis or Carhartt-style pants, PDI shirt, clean athletic or casual shoes in a neutral color. Bring jeans and casual pant options.", supplied: "PDI-branded shirts" },
+    { no: 4, name: "Caleb McCoy", wardRef: "serviceMen", role: "Warehouse / truck driver", agency: "Houghton Talent", agent: "Christy Hill", photo: "img/talent-caleb.jpg", profile: "https://resumes.breakdownexpress.com/971155-3309678?email=d39690e3-eb05-4148-8c67-735ab33046f5",
+      wardrobe: "Dark business-casual jeans, khakis or Carhartt-style pants, PDI shirt, clean athletic or casual shoes in a neutral color. Prioritize khaki pants. Bring jeans and casual pant options.", supplied: "PDI-branded shirts and a quarter-zip" },
+    { no: 5, name: "Byron John", wardRef: "contractor1", role: "Customer", agency: "AMT Talent", agent: "Kelly Nehmen", photo: "img/talent-byron.jpg", profile: "https://resumes.breakdownexpress.com/1345764-7741300?email=a60f823e-29c9-4b90-a1e1-d55685067aae",
+      wardrobe: "Contractor I look: utility work pants, plain neutral work tee or polo, boots, nondescript ballcap. No PDI or other logos, reflective materials, wrinkles, small patterns, rips or stains.", supplied: "" }
   ],
-  castingNote: "No speaking roles. Ammunition would like to see photos of PDI employee talent before casting, to make sure the cast of team members and customers is diverse.",
+  wardRefs: {
+    serviceMen: { label: "Service / retail man", list: ["img/ward-service-m1.jpg", "img/ward-service-m2.jpg", "img/ward-service-m3.jpg", "img/ward-service-m4.jpg", "img/ward-service-m5.jpg"] },
+    serviceWomen: { label: "Service / retail woman", list: ["img/ward-service-w1.jpg", "img/ward-service-w2.jpg", "img/ward-service-w3.jpg", "img/ward-service-w4.jpg", "img/ward-service-w5.jpg"] },
+    contractor1: { label: "Contractor I", list: ["img/ward-contractor1.jpg"] },
+    contractor2: { label: "Contractor II", list: ["img/ward-contractor2.jpg"] },
+    builder: { label: "Custom Home Builder", list: ["img/ward-builder.jpg"] },
+    diy: { label: "DIY Remodeler", list: ["img/ward-diy.jpg"] }
+  },
+  castingNote: "No speaking roles. All five talent roles are cast.",
   wardrobe: {
     general: "Clean, unwrinkled, no stains, tears, writing or logos. No reflective fabrics or small patterns; solid colors preferred. Bring two wardrobe options to set. PDI-branded clothing and accessories will be provided.",
     pieces: [
@@ -330,15 +365,16 @@ const P = {
       ["Not allowed", "Camouflage, T-shirts, tank tops, shorts, construction or hunting boots (PDI dress code)."]
     ],
     customers: [
-      ["Contractor I", "Utility work pants, plain neutral work tee or polo, boots, nondescript ballcap."],
-      ["Contractor II", "Elevated neutral athletic wear (no sweatpants). Optional hi-vis or safety outer layer."],
-      ["Custom Home Builder", "Business casual: jeans, neatly pressed button-down, all-weather jacket."],
-      ["DIY Remodeler", "Elevated neutral athletic wear (leggings, fitted top or jacket). Optional crossbody purse."]
+      ["Contractor I", "Utility work pants, plain neutral work tee or polo, boots, nondescript ballcap.", "No PDI or other logos, reflective materials, wrinkles, small patterns, rips or stains.", "Byron John (Talent 5)", "contractor1"],
+      ["Contractor II", "Elevated neutral athletic wear (no sweatpants).", "No PDI or other logos, wrinkles, small patterns, rips or stains.", "", "contractor2"],
+      ["Custom Home Builder", "Business casual: jeans, neatly pressed button-down, all-weather jacket.", "No PDI or other logos, reflective materials, wrinkles, small patterns, rips or stains.", "", "builder"],
+      ["DIY Remodeler", "Elevated neutral athletic wear (leggings, fitted top or jacket). Optional crossbody purse.", "No PDI or other logos, wrinkles, reflective materials, small patterns, rips or stains.", "", "diy"]
     ],
-    customerRule: "PDI employees play the customers. No PDI or other logos, reflective materials, wrinkles, small patterns, rips or stains."
+    customerRule: "PDI employees will act as customers, so we need a variety of sizes. Stick to a neutral palette: navy, charcoal, grey, khaki and white."
   },
   docs: [
-    ["PDI 2026 Wardrobe and Photography Recos", "Ammunition · 17 pp · photographer, wardrobe, casting", "confirmed"],
+    ["PDI 2026 Talent, Wardrobe & Photography v2", "Ammunition · 13 pp · talent wardrobe selections, customer looks", "confirmed"],
+    ["PDI 2026 Wardrobe and Photography Recos (v1)", "Ammunition · 17 pp · photographer, wardrobe, casting", "confirmed"],
     ["PDI B2B Shot List", "Ammunition · Google Slides · video priorities + reference images", "confirmed", "https://docs.google.com/presentation/d/12EkScJ4FWiiC2CxMEgMLQumo0mk2AJUM-dQxEFDwAeg/edit?slide=id.g3d282e93741_0_3298#slide=id.g3d282e93741_0_3298"],
     ["Photoshoot Trade Shot List v3", "PDI · 6 pp · Lawrenceville stills", "confirmed"],
     ["Shoot schedule / call sheet", "Ammunition", "tbd"],
@@ -353,6 +389,11 @@ const pill = s => `<span class="pill ${s}">${s === "tbd" ? "TBD" : s}</span>`;
 const pri = n => `<span class="pri p${n}">P${n}</span>`;
 const table = (cols, rows) => `<div class="tbl-wrap"><table><thead><tr>${cols.map(c => `<th>${c}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 const allShots = Object.values(P.shotGroups).flat();
+
+const wardStrip = key => {
+  const g = P.wardRefs[key]; if (!g) return "";
+  return `<div class="refs">${g.list.map((r, i) => `<button type="button" class="ref ward" data-wg="${key}" data-i="${i}" aria-label="Open ${esc(g.label)} wardrobe reference ${i + 1}"><img src="${r}" alt="${esc(g.label)} wardrobe reference ${i + 1}" loading="lazy"></button>`).join("")}</div>`;
+};
 
 const sections = [
   ["overview", "Overview", () => `
@@ -401,21 +442,34 @@ const sections = [
       <article class="castcard">
         ${c.photo ? `<img class="headshot" src="${esc(c.photo)}" alt="Headshot of ${esc(c.name)}">` : `<div class="headshot empty" role="img" aria-label="Headshot coming for ${esc(c.name)}"><span>${esc(c.name.split(" ").slice(0, 2).map(w => w[0]).join(""))}</span><small>Headshot coming</small></div>`}
         <div class="castbody">
+          ${c.no ? `<div class="eyebrow">Talent ${c.no}</div>` : ""}
           <h3>${esc(c.name)}</h3>
           <dl class="kv"><dt>Role</dt><dd>${esc(c.role)}</dd><dt>Agency</dt><dd>${esc(c.agency)}</dd>${c.agent ? `<dt>Agent</dt><dd>${esc(c.agent)}</dd>` : ""}</dl>
+          ${c.wardrobe ? `<div class="castward"><strong>Wardrobe</strong><p>${esc(c.wardrobe)}</p>${c.supplied ? `<p class="supplied">PDI supplies: ${esc(c.supplied)}</p>` : ""}</div>` : ""}
           ${c.profile ? `<a href="${esc(c.profile)}" target="_blank" rel="noopener">View casting profile ↗</a>` : ""}
         </div>
       </article>`).join("")}</div>
-    <h3 style="font-size:15px;margin:22px 0 8px">Casting specs</h3>
-    ${table(["Talent", "Persona", "Casting", "Status"], P.talent.map(t => [esc(t[0]), esc(t[1]), esc(t[2]), pill(t[3])]))}
+    <h3 style="font-size:15px;margin:22px 0 8px">Casting</h3>
+    ${table(["Talent", "Persona", "Casting spec", "Cast", "Status"], P.talent.map(t => [esc(t[0]), esc(t[1]), esc(t[2]), `<strong>${esc(t[3])}</strong>`, pill(t[4])]))}
     <div class="callout" style="margin-top:14px">${esc(P.castingNote)}</div>`],
   ["wardrobe", "Wardrobe", () => `
     <p style="margin:0 0 14px;max-width:65ch">${esc(P.wardrobe.general)}</p>
-    <h3 style="font-size:15px;margin-bottom:8px">PDI employee roles</h3>
+    <h3 style="font-size:15px;margin-bottom:8px">Talent wardrobe selections</h3>
+    <div class="wardlist">${[...P.cast].sort((a, b) => a.no - b.no).map(c => `
+      <div class="wardrow">
+        <div class="wardtext">
+          <div class="eyebrow">Talent ${c.no} · ${esc(c.role)}</div>
+          <h3>${esc(c.name)}</h3>
+          <p>${esc(c.wardrobe)}</p>
+          ${c.supplied ? `<p class="supplied">PDI supplies: ${esc(c.supplied)}</p>` : ""}
+        </div>
+        <div><div class="refs-label">Wardrobe references</div>${wardStrip(c.wardRef)}</div>
+      </div>`).join("")}</div>
+    <h3 style="font-size:15px;margin:22px 0 8px">PDI employee dress code</h3>
     ${table(["", "Guideline"], P.wardrobe.pieces.map(w => [`<strong>${esc(w[0])}</strong>`, esc(w[1])]))}
     <h3 style="font-size:15px;margin:20px 0 4px">Customer personas</h3>
     <p class="sec-note" style="margin:0 0 10px">${esc(P.wardrobe.customerRule)}</p>
-    <div class="grid2">${P.wardrobe.customers.map((c, i) => `<div class="box"><div class="eyebrow">0${i + 1}</div><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p></div>`).join("")}</div>`],
+    <div class="grid2">${P.wardrobe.customers.map((c, i) => `<div class="box persona">${c[4] ? `<button type="button" class="ref ward personaimg" data-wg="${c[4]}" data-i="0" aria-label="Open ${esc(c[0])} wardrobe reference"><img src="${P.wardRefs[c[4]].list[0]}" alt="${esc(c[0])} wardrobe reference" loading="lazy"></button>` : ""}<div><div class="eyebrow">0${i + 1}</div><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p><p class="sec-note">${esc(c[2])}</p>${c[3] ? `<p><span class="chip">${esc(c[3])}</span></p>` : ""}</div></div>`).join("")}</div>`],
   ["crew", "Crew", () => `
     ${table(["Dept", "Role", "Who", "Status"], P.crew.map(c => [esc(c[0]), esc(c[1]), v(c[2]), pill(c[3])]))}
     <div class="callout" style="margin-top:14px"><strong>Scott Lowden:</strong> ${esc(P.photographerNote)}</div>`],
@@ -467,17 +521,20 @@ const lb = document.createElement("div");
 lb.className = "lightbox"; lb.hidden = true;
 lb.innerHTML = '<button type="button" class="lb-x" aria-label="Close">×</button><button type="button" class="lb-nav lb-prev" aria-label="Previous">‹</button><figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-nav lb-next" aria-label="Next">›</button>';
 document.body.appendChild(lb);
-let lbG = null, lbI = 0;
+let lbList = [], lbLabel = "", lbI = 0;
 function showLB() {
-  const list = P.refs[lbG]; lbI = (lbI + list.length) % list.length;
-  lb.querySelector("img").src = list[lbI];
-  lb.querySelector("img").alt = `${P.blocks[lbG][0]} scout reference ${lbI + 1}`;
-  lb.querySelector("figcaption").textContent = `${P.blocks[lbG][0]} · scout reference ${lbI + 1} of ${list.length}`;
+  lbI = (lbI + lbList.length) % lbList.length;
+  lb.querySelector("img").src = lbList[lbI];
+  lb.querySelector("img").alt = `${lbLabel} ${lbI + 1}`;
+  lb.querySelector("figcaption").textContent = `${lbLabel} ${lbI + 1} of ${lbList.length}`;
+  lb.querySelector(".lb-prev").hidden = lb.querySelector(".lb-next").hidden = lbList.length < 2;
   lb.hidden = false;
 }
-document.getElementById("sl-body").addEventListener("click", e => {
+document.getElementById("main").addEventListener("click", e => {
   const b = e.target.closest(".ref"); if (!b) return;
-  lbG = b.dataset.rg; lbI = +b.dataset.i; showLB(); lb.querySelector(".lb-x").focus();
+  if (b.dataset.wg) { const g = P.wardRefs[b.dataset.wg]; lbList = g.list; lbLabel = `${g.label} · wardrobe reference`; }
+  else { lbList = P.refs[b.dataset.rg]; lbLabel = `${P.blocks[b.dataset.rg][0]} · scout reference`; }
+  lbI = +b.dataset.i; showLB(); lb.querySelector(".lb-x").focus();
 });
 lb.querySelector(".lb-x").onclick = () => { lb.hidden = true; };
 lb.querySelector(".lb-prev").onclick = () => { lbI--; showLB(); };
